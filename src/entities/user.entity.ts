@@ -1,17 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { Group } from './group.entity';
 import { Photo } from './photo.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   firstName: string;
 
   @Column()
-  prefix: string
+  prefix: string;
 
   @Column()
   lastName: string;
@@ -19,10 +26,10 @@ export class User {
   @Column({ default: true })
   isActive: boolean;
 
-  @OneToMany(() => Photo, photo => photo.user)
+  @OneToMany(() => Photo, (photo) => photo.user)
   photos: Photo[];
 
-  @ManyToMany(() => Group, group => group.users)
+  @ManyToMany(() => Group, (group) => group.users)
   @JoinTable()
   groups: Group[];
 }
