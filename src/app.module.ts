@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { Group } from './entities/group.entity';
 import { Photo } from './entities/photo.entity';
 import { User } from './entities/user.entity';
+import { UsersModule } from './modules/users.module';
+import { UserService } from './services/user.service';
 
 @Module({
   imports: [
@@ -23,7 +25,8 @@ import { User } from './entities/user.entity';
       },
       autoLoadEntities: true,
       synchronize: true,
-    })
+    }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
