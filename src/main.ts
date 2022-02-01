@@ -8,9 +8,9 @@ import { UserService } from './services/user.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const userService = new UserService();
-  // userService.seedUsers();
-  // userService.seedGroups();
-  // userService.seedPhotos();
+  await userService.seedUsers();
+  await userService.seedGroups();
+  await userService.seedPhotos();
   await app.listen(3000);
 }
 bootstrap();

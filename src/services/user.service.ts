@@ -13,6 +13,7 @@ import {
 @Injectable()
 export class UserService {
   defaultConnection = getConnectionManager().get('default');
+  userArray: User[];
 
   async seedUsers() {
     const userRepository = this.defaultConnection.getRepository(User);
@@ -28,6 +29,8 @@ export class UserService {
 
       console.log(user);
     }
+
+    this.userArray = await userRepository.find();
   }
 
   async seedGroups() {
@@ -38,6 +41,16 @@ export class UserService {
 
       group.name = 'groep' + index.toString();
       group.description = 'groep voor testen' + index.toString();
+
+      try {
+        if (index !== 999) {
+          group.users = [this.userArray[index], this.userArray[index + 1]];
+        } else {
+          group.users = [this.userArray[index]];
+        }
+      } catch (error) {
+        console.log(error);
+      }
 
       await groupRepository.save(group);
 
@@ -53,6 +66,7 @@ export class UserService {
 
       photo.name = 'photo' + index.toString();
       photo.description = 'photo voor testen' + index.toString();
+      photo.user = this.userArray[index];
 
       await photoRepository.save(photo);
 
