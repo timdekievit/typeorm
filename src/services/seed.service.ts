@@ -11,14 +11,14 @@ import {
 } from 'typeorm';
 
 @Injectable()
-export class UserService {
+export class SeedService {
   defaultConnection = getConnectionManager().get('default');
   userArray: User[];
 
   async seedUsers() {
     const userRepository = this.defaultConnection.getRepository(User);
 
-    for (let index = 0; index < 1000; index++) {
+    for (let index = 0; index < 10000; index++) {
       const user = new User();
 
       user.firstName = 'Tim' + index.toString();
@@ -36,14 +36,14 @@ export class UserService {
   async seedGroups() {
     const groupRepository = this.defaultConnection.getRepository(Group);
 
-    for (let index = 0; index < 1000; index++) {
+    for (let index = 0; index < 10000; index++) {
       const group = new Group();
 
       group.name = 'groep' + index.toString();
       group.description = 'groep voor testen' + index.toString();
 
       try {
-        if (index !== 999) {
+        if (index !== 9999) {
           group.users = [this.userArray[index], this.userArray[index + 1]];
         } else {
           group.users = [this.userArray[index]];
@@ -61,7 +61,7 @@ export class UserService {
   async seedPhotos() {
     const photoRepository = this.defaultConnection.getRepository(Photo);
 
-    for (let index = 0; index < 1000; index++) {
+    for (let index = 0; index < 10000; index++) {
       const photo = new Photo();
 
       photo.name = 'photo' + index.toString();
